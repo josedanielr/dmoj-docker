@@ -14,31 +14,19 @@ services:
     restart: always
     networks: [site]
   texoid:
-    build:
-      context: .
-      dockerfile: ./texoid/Dockerfile
     image: ninjaclasher/dmoj-texoid
     restart: unless-stopped
     networks: [site]
   mathoid:
-    build:
-      context: .
-      dockerfile: ./mathoid/Dockerfile
     image: ninjaclasher/dmoj-mathoid
     restart: unless-stopped
     volumes:
       - ./mathoid/config.yaml:/node_modules/mathoid/config.yaml
     networks: [site]
   base:
-    build:
-      context: .
-      dockerfile: ./base/Dockerfile
     image: ninjaclasher/dmoj-base
     network_mode: none
   site:
-    build:
-      context: .
-      dockerfile: ./site/Dockerfile
     image: ninjaclasher/dmoj-site
     restart: unless-stopped
     volumes:
@@ -55,9 +43,6 @@ services:
     networks: [site, nginx, db]
     depends_on: [base, db, redis]
   celery:
-    build:
-      context: .
-      dockerfile: ./celery/Dockerfile
     image: ninjaclasher/dmoj-celery
     restart: unless-stopped
     volumes:
@@ -69,9 +54,6 @@ services:
     networks: [site, db]
     depends_on: [base, db, redis]
   bridged:
-    build:
-      context: .
-      dockerfile: ./bridged/Dockerfile
     image: ninjaclasher/dmoj-bridged
     restart: unless-stopped
     volumes:
@@ -85,9 +67,6 @@ services:
       - 9999:9999
     depends_on: [base, db, redis]
   wsevent:
-    build:
-      context: .
-      dockerfile: ./wsevent/Dockerfile
     image: ninjaclasher/dmoj-wsevent
     restart: unless-stopped
     volumes:
