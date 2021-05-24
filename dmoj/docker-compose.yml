@@ -23,9 +23,6 @@ services:
     volumes:
       - ./mathoid/config.yaml:/node_modules/mathoid/config.yaml
     networks: [site]
-  base:
-    image: ninjaclasher/dmoj-base
-    network_mode: none
   site:
     image: ninjaclasher/dmoj-site
     restart: unless-stopped
