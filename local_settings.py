@@ -1,4 +1,3 @@
-
 #####################################
 ########## Django settings ##########
 #####################################
@@ -154,6 +153,11 @@ ENABLE_FTS = True
 # Set of email providers to ban when a user registers, e.g., {'throwawaymail.com'}.
 BAD_MAIL_PROVIDERS = set()
 
+# The number of submissions that a staff user can rejudge at once without
+# requiring the permission 'Rejudge a lot of submissions'.
+# Uncomment to change the submission limit.
+#DMOJ_SUBMISSIONS_REJUDGE_LIMIT = 10
+
 ## Event server.
 # Uncomment to enable live updating.
 EVENT_DAEMON_USE = True
@@ -189,15 +193,15 @@ SELECT2_CSS_URL = '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.mi
 TIMEZONE_MAP = 'http://naturalearth.springercarto.com/ne3_data/8192/textures/3_no_ice_clouds_8k.jpg'
 
 ## Camo (https://github.com/atmos/camo) usage.
-#CAMO_URL = "<URL to your camo install>"
-#CAMO_KEY = "<The CAMO_KEY environmental variable you used>"
+#DMOJ_CAMO_URL = "<URL to your camo install>"
+#DMOJ_CAMO_KEY = "<The CAMO_KEY environmental variable you used>"
 
 # Domains to exclude from being camo'd.
-#CAMO_EXCLUDE = ("https://dmoj.ml", "https://dmoj.ca")
+#DMOJ_CAMO_EXCLUDE = ("https://dmoj.ml", "https://dmoj.ca")
 
 # Set to True to use https when dealing with protocol-relative URLs.
 # See <http://www.paulirish.com/2010/the-protocol-relative-url/> for what they are.
-#CAMO_HTTPS = False
+#DMOJ_CAMO_HTTPS = False
 
 # HTTPS level. Affects <link rel='canonical'> elements generated.
 # Set to 0 to make http URLs canonical.
@@ -218,6 +222,8 @@ USE_SELENIUM = True
 DMOJ_USER_DATA_DOWNLOAD = True
 DMOJ_USER_DATA_CACHE = '/datacache'
 DMOJ_USER_DATA_INTERNAL = '/datacache'
+# How often a user can download their data.
+#DMOJ_USER_DATA_DOWNLOAD_RATELIMIT = datetime.timedelta(days=1)
 
 #############
 ## Mathoid ##
@@ -230,7 +236,6 @@ MATHOID_CACHE_URL = '//{host}/mathoid/'.format(host=HOST)
 ############
 ## Texoid ##
 ############
-
 TEXOID_URL = 'http://texoid:8888'
 TEXOID_CACHE_ROOT = '/cache/texoid/'
 TEXOID_CACHE_URL = '//{host}/texoid/'.format(host=HOST)
@@ -250,6 +255,19 @@ LOGGING = {
         },
     },
     'handlers': {
+        # You may use this handler as example for logging to other files..
+        'bridge': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': '/logs/bridge.log',
+            'maxBytes': 10 * 1024 * 1024,
+            'backupCount': 3,
+            'formatter': 'file',
+        },
+        # 'mail_admins': {
+            # 'level': 'ERROR',
+            # 'class': 'dmoj.throttle_mail.ThrottledEmailHandler',
+        # },
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
@@ -257,10 +275,33 @@ LOGGING = {
         },
     },
     'loggers': {
+        # Site 500 error mails.
+        'django.request': {
+            'handlers': ['console'],
+            'level': 'WARNING',
+            'propagate': False,
+        },
+        # Judging logs as received by bridged.
+        'judge.bridge': {
+            'handlers': ['bridge'],
+            'level': 'WARNING',
+            'propagate': False,
+        },
+        # Catch all log to stderr.
         '': {
             'handlers': ['console'],
             'level': 'DEBUG',
         },
+        'judge.problem.pdf': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        }
+        # Other loggers of interest. Configure at will.
+        #  - judge.user: logs naughty user behaviours.
+        #  - judge.problem.pdf: PDF generation log.
+        #  - judge.html: HTML parsing errors when processing problem statements etc.
+        #  - judge.mail.activate: logs for the reply to activate feature.
+        #  - event_socket_server
     },
 }
 
