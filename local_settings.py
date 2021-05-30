@@ -183,10 +183,10 @@ EVENT_DAEMON_POLL = '/channels/'
 ## CDN control.
 # Base URL for a copy of ace editor.
 # Should contain ace.js, along with mode-*.js.
-ACE_URL = '//cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/'
-JQUERY_JS = '//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js'
-SELECT2_JS_URL = '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js'
-SELECT2_CSS_URL = '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css'
+ACE_URL = STATIC_URL + 'libs/ace/'
+JQUERY_JS = STATIC_URL + '/libs/jquery-3.4.1.min.js'
+SELECT2_JS_URL = STATIC_URL + '/libs/select2/select2.js'
+SELECT2_CSS_URL = STATIC_URL + '/libs/select2/select2.css'
 
 # A map of Earth in Equirectangular projection, for timezone selection.
 # Please try not to hotlink this poor site.
