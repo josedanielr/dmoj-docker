@@ -5,7 +5,7 @@ services:
     image: mariadb
     restart: always
     volumes:
-      - ./database/:/var/lib/mysql/
+      - ./.volumes/database/:/var/lib/mysql/
     env_file: [environment/mysql.env, environment/mysql-admin.env]
     networks: [db]
   redis:
@@ -31,38 +31,38 @@ services:
       - pdfcache:/pdfcache/
       - datacache:/datacache/
       - cache:/cache/
-      - ./logs/:/logs/
-      - ./media/:/media/
-      - ./problems/:/problems/
+      - ./.volumes/logs/:/logs/
+      - ./.volumes/media/:/media/
+      - ./.volumes/problems/:/problems/
       - ./repo/:/site/
     working_dir: /site/
     env_file: [environment/mysql.env, environment/site.env]
     networks: [site, nginx, db]
-    depends_on: [base, db, redis]
+    depends_on: [db, redis]
   celery:
     image: ninjaclasher/dmoj-celery
     restart: unless-stopped
     volumes:
       - datacache:/datacache/
-      - ./logs/:/logs/
+      - ./.volumes/logs/:/logs/
       - ./repo/:/site/
     working_dir: /site/
     env_file: [environment/mysql.env, environment/site.env]
     networks: [site, db]
-    depends_on: [base, db, redis]
+    depends_on: [db, redis]
   bridged:
     image: ninjaclasher/dmoj-bridged
     restart: unless-stopped
     volumes:
-      - ./logs/:/logs/
-      - ./problems/:/problems/
+      - ./.volumes/logs/:/logs/
+      - ./.volumes/problems/:/problems/
       - ./repo/:/site/
     working_dir: /site/
     env_file: [environment/mysql.env, environment/site.env]
     networks: [site, nginx, db]
     ports:
       - 9999:9999
-    depends_on: [base, db, redis]
+    depends_on: [db, redis]
   wsevent:
     image: ninjaclasher/dmoj-wsevent
     restart: unless-stopped
@@ -81,8 +81,8 @@ services:
       - pdfcache:/pdfcache/
       - datacache:/datacache/
       - cache:/cache/
-      - ./logs/:/logs/
-      - ./media/:/media/
+      - ./.volumes/logs/:/logs/
+      - ./.volumes/media/:/media/
       - ./nginx/conf.d/:/etc/nginx/conf.d/
     networks: [nginx]
     depends_on: [site, wsevent]
