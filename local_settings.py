@@ -53,8 +53,8 @@ DATABASES = {
 
 # Internationalization.
 # Documentation: <https://docs.djangoproject.com/en/1.11/topics/i18n/>
-LANGUAGE_CODE = 'en-ca'
-DEFAULT_USER_TIME_ZONE = 'America/Toronto'
+LANGUAGE_CODE = 'en-us'
+DEFAULT_USER_TIME_ZONE = 'America/Havana'
 USE_I18N = True
 USE_L10N = True
 dUSE_TZ = True
@@ -75,13 +75,13 @@ STATICFILES_FINDERS += ('compressor.finders.CompressorFinder',)
 ########## Email configuration ##########
 #########################################
 # See <https://docs.djangoproject.com/en/1.11/topics/email/#email-backends>
-# for more documentation. You should follow the information there to define 
+# for more documentation. You should follow the information there to define
 # your email settings.
 
 # Use this if you are just testing.
-#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# The following block is included for your convenience, if you want 
+# The following block is included for your convenience, if you want
 # to use Gmail.
 #EMAIL_USE_TLS = True
 #EMAIL_HOST = 'smtp.gmail.com'
@@ -115,8 +115,8 @@ SERVER_EMAIL = 'DMOJ: Modern Online Judge <errors@dmoj.ca>'
 ##################################################
 # See <https://docs.djangoproject.com/en/1.11/howto/static-files/>.
 
-# Change this to somewhere more permanent., especially if you are using a 
-# webserver to serve the static files. This is the directory where all the 
+# Change this to somewhere more permanent., especially if you are using a
+# webserver to serve the static files. This is the directory where all the
 # static files DMOJ uses will be collected to.
 # You must configure your webserver to serve this directory as /static/ in production.
 STATIC_ROOT = '/assets/static/'
@@ -139,7 +139,7 @@ TERMS_OF_SERVICE_URL = None
 
 ## Bridge controls.
 # The judge connection address and port; where the judges will connect to the site.
-# You should change this to something your judges can actually connect to 
+# You should change this to something your judges can actually connect to
 # (e.g., a port that is unused and unblocked by a firewall).
 BRIDGED_JUDGE_ADDRESS = [('bridged', 9999)]
 
@@ -190,7 +190,7 @@ SELECT2_CSS_URL = '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.mi
 
 # A map of Earth in Equirectangular projection, for timezone selection.
 # Please try not to hotlink this poor site.
-TIMEZONE_MAP = 'http://naturalearth.springercarto.com/ne3_data/8192/textures/3_no_ice_clouds_8k.jpg'
+TIMEZONE_MAP = '/static/world.jpg'
 
 ## Camo (https://github.com/atmos/camo) usage.
 #DMOJ_CAMO_URL = "<URL to your camo install>"
@@ -327,7 +327,7 @@ LOGGING = {
 #CSRF_COOKIE_SECURE = True
 #SESSION_COOKIE_SECURE = True
 
-REGISTRATION_OPEN = False
+REGISTRATION_OPEN = True
 DMOJ_RATING_COLORS = True
 X_FRAME_OPTIONS = 'DENY'
 
