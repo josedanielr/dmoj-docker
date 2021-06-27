@@ -39,7 +39,7 @@ DATABASES = {
         'NAME': os.environ.get('MYSQL_DATABASE', ''),
         'USER': os.environ.get('MYSQL_USER', ''),
         'PASSWORD': os.environ.get('MYSQL_PASSWORD', ''),
-        'HOST': 'db',
+        'HOST': os.environ.get('MYSQL_HOST', ''),
         'OPTIONS': {
             'charset': 'utf8mb4',
             'sql_mode': 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION',
