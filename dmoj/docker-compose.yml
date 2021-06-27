@@ -1,13 +1,13 @@
 version: '3.7'
 services:
-  db:
-    container_name: dmoj_mysql
-    image: mariadb
-    restart: always
-    volumes:
-      - ./.volumes/database/:/var/lib/mysql/
-    env_file: [environment/mysql.env, environment/mysql-admin.env]
-    networks: [db]
+  # db:
+    # container_name: dmoj_mysql
+    # image: mariadb
+    # restart: always
+    # volumes:
+      # - ./.volumes/database/:/var/lib/mysql/
+    # env_file: [environment/mysql.env, environment/mysql-admin.env]
+    # networks: [db]
   redis:
     container_name: dmoj_redis
     image: redis:alpine
@@ -37,8 +37,8 @@ services:
       - ./repo/:/site/
     working_dir: /site/
     env_file: [environment/mysql.env, environment/site.env]
-    networks: [site, nginx, db]
-    depends_on: [db, redis]
+    networks: [site, nginx]
+    depends_on: [redis]
   celery:
     image: ninjaclasher/dmoj-celery
     restart: unless-stopped
@@ -48,8 +48,8 @@ services:
       - ./repo/:/site/
     working_dir: /site/
     env_file: [environment/mysql.env, environment/site.env]
-    networks: [site, db]
-    depends_on: [db, redis]
+    networks: [site]
+    depends_on: [redis]
   bridged:
     image: ninjaclasher/dmoj-bridged
     restart: unless-stopped
@@ -59,10 +59,10 @@ services:
       - ./repo/:/site/
     working_dir: /site/
     env_file: [environment/mysql.env, environment/site.env]
-    networks: [site, nginx, db]
+    networks: [site, nginx]
     ports:
       - 9999:9999
-    depends_on: [db, redis]
+    depends_on: [redis]
   wsevent:
     image: ninjaclasher/dmoj-wsevent
     restart: unless-stopped
@@ -88,7 +88,6 @@ services:
     depends_on: [site, wsevent]
 networks:
   site:
-  db:
   nginx:
 volumes:
   assets:
