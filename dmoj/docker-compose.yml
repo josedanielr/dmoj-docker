@@ -82,7 +82,10 @@ services:
       - datacache:/datacache/
       - cache:/cache/
       - ./.volumes/logs/:/logs/
+      # static files internally managed by web app
       - ./.volumes/media/:/media/
+      # static files manually managed
+      - ./.volumes/res/:/res/
       - ./nginx/conf.d/:/etc/nginx/conf.d/
     networks: [nginx]
     depends_on: [site, wsevent]
