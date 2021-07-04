@@ -104,10 +104,13 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # A tuple of (name, email) pairs that specifies those who will be mailed
 # when the server experiences an error when DEBUG = False.
-ADMINS = ()
+ADMINS = (
+    ('Jose Daniel', 'josedanielr@yandex.com'),
+    ('Osmani', 'osmanir@uclv.cu'),
+)
 
 # The sender for the aforementioned emails.
-SERVER_EMAIL = 'DMOJ: Modern Online Judge <errors@dmoj.ca>'
+SERVER_EMAIL = 'DMOJ-UCLV Report <no-reply@uclv.cu>'
 
 
 ##################################################
@@ -132,10 +135,10 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStora
 ############################################
 
 ## DMOJ site display settings.
-SITE_NAME = 'DMOJ'
-SITE_LONG_NAME = 'DMOJ: Modern Online Judge'
-SITE_ADMIN_EMAIL = 'admin@example.com'
-TERMS_OF_SERVICE_URL = None
+SITE_NAME = 'DMOJ UCLV'
+SITE_LONG_NAME = 'DMOJ: Modern Online Judge - UCLV'
+SITE_ADMIN_EMAIL = 'josedanielr@yandex.com'
+TERMS_OF_SERVICE_URL = '/tos' # Use a flatpage.
 
 ## Bridge controls.
 # The judge connection address and port; where the judges will connect to the site.
