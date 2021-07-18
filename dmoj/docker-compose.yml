@@ -48,6 +48,7 @@ services:
       - ./.volumes/logs/:/logs/
       - ./repo/:/site/
     working_dir: /site/
+    user: 1000:1000
     env_file: [environment/mysql.env, environment/site.env]
     networks: [site]
     depends_on: [redis]
@@ -59,6 +60,7 @@ services:
       - ./.volumes/problems/:/problems/
       - ./repo/:/site/
     working_dir: /site/
+    user: 1000:1000
     env_file: [environment/mysql.env, environment/site.env]
     networks: [site, nginx]
     ports:
@@ -70,6 +72,7 @@ services:
     volumes:
       - ./repo/:/app/site/
     working_dir: /app/site
+    user: 1000:1000
     networks: [site, nginx]
   nginx:
     container_name: dmoj_nginx
