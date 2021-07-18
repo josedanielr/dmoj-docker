@@ -36,6 +36,7 @@ services:
       - ./.volumes/problems/:/problems/
       - ./repo/:/site/
     working_dir: /site/
+    user: 1000:1000
     env_file: [environment/mysql.env, environment/site.env]
     networks: [site, nginx]
     depends_on: [redis]
