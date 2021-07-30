@@ -57,7 +57,7 @@ LANGUAGE_CODE = 'en-us'
 DEFAULT_USER_TIME_ZONE = 'America/Havana'
 USE_I18N = True
 USE_L10N = True
-dUSE_TZ = True
+USE_TZ = True
 
 ## django-compressor settings, for speeding up page load times by minifying CSS and JavaScript files.
 # Documentation: https://django-compressor.readthedocs.io/en/latest/
