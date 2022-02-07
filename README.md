@@ -75,9 +75,12 @@ Updating various sections of the site requires different images to be rebuilt.
 
 If any prerequisites were modified, you will need to rebuild most of the images:
 ```sh
-$ docker-compose up -d --build base site celery bridged wsevent
+$ docker-compose pull
+$ docker-compose up -d site celery bridged wsevent
 ```
 If the static files are modified, read the section on [Managing Static Files](#managing-static-files).
+
+If there are new DB migrations, read the section on [Migrating](#migrating).
 
 If only the source code is modified, a restart is sufficient:
 ```sh
